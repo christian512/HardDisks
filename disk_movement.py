@@ -54,6 +54,23 @@ def update_disk_velocities_wall_collision(disks, disk_num , xlim, ylim):
     print('Warning: NO DISK HAS HIT THE WALL, BUT IT WAS ASSUMED THAT ONE DOES')
     return False
 
+def time_to_next_collision(disk1,disk2):
+    """ Calculates next collision time between two disks
+        For calculation of formulas see handwritten page
+    """
+    denominator = (disk1[2]-disk2[2])**2+(disk1[3]-disk2[3])**2
+    chi = ((disk1[0]-disk2[0])*(disk1[2]-disk2[2])+(disk1[1]-disk2[1])*(disk1[3]-disk2[3]))
+    delta = chi**2 - denominator * ((disk1[0]-disk2[0])**2 + (disk1[1]-disk2[1])**2 - (disk1[-1] + disk2[-1])**2)
+    if delta <= 0:
+        return False
+    t1 = (-chi + np.sqrt(delta)) / denominator
+    t2 = (-chi - np.sqrt(delta)) / denominator
+
+    # Return both solutions of the quadratic equation
+    return t1, t2
+
+
+
 
 
 
