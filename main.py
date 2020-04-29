@@ -13,13 +13,10 @@ RADIUS = 5
 X_LIMITS = [-100, 100]
 Y_LIMITS = [-100, 100]
 # Set maximum speed in one direction
-V_MAX = 2
+V_MAX = 5
 
 # Set maximum time step (for visualizations to be smooth)
 T_STEP = 1
-
-# Seed random number generator for reproducibility
-
 
 # Create new disks
 disks = np.empty((0,5),float) # List of all disks
@@ -40,14 +37,14 @@ for i in range(N):
             break
 
 # Setup a plot and initialize camera for animation
-fig, ax = plot_setup(X_LIMITS, Y_LIMITS)
+fig, ax = plot_setup_box(X_LIMITS, Y_LIMITS)
 camera = Camera(fig)
+
 # Simulate for a number of steps
 t = 0
-zero_count = 0
+
 print('Running simulation')
-color = 'white'
-while t < 300:
+while t < 250:
     # Calculate time to next wall hit
     dt_wall, disk_num = time_to_next_wall_collision(disks, X_LIMITS, Y_LIMITS)
     dt_disk, disk_coll1, disk_coll2 = time_next_disk_disk_collision(disks)
@@ -60,11 +57,6 @@ while t < 300:
     # Add time step to global animation time
     t += dt
     print(t)
-
-    if dt == 0.0:
-        zero_count += 1
-    if zero_count > 5:
-        break
 
     # Move disks by time step
     disks = move_disks(disks, dt)
@@ -79,12 +71,11 @@ while t < 300:
         ax = plot_disks(disks, ax)
         camera.snap()
 
-
 # Animation
 # TODO: Animation crashed when simulation time is too long (e.g. 500)
 print('Creating animation')
 animation = camera.animate(interval=20)
-animation.save('anim.mp4', writer='imagemagick')
+animation.save('results/animation.mp4', writer='imagemagick')
 
 
 
