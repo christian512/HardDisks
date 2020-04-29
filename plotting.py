@@ -19,10 +19,12 @@ def plot_setup_box(xlimits, ylimits):
 def plot_disks(disks, ax):
     """ Plots all disks within a box model """
     # plot each disk
+    circles = []
     for d in disks:
         circle = plt.Circle([d[0],d[1]], d[-1], color='r')
+        circles.append(circle)
         ax.add_artist(circle)
-    return ax
+    return ax, circles
 
 def plot_setup_distribution(disks):
     """ Sets up a plot for plotting distribution of velocities"""
@@ -41,9 +43,8 @@ def plot_distribution(disks, ax, bins=20):
     # get absolute velocities of all disks
     velos = np.sqrt(disks[:,2]**2 + disks[:,3]**2)
     # plot histogram of all velocities
-    ax.hist(velos,bins=bins)
+    ax.hist(velos,bins=bins,color='b')
     return ax
-
 
 
 
