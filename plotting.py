@@ -9,9 +9,11 @@ def plot_setup_box(xlimits, ylimits):
     # Set plot limits as box
     ax.set_xlim(xlimits)
     ax.set_ylim(ylimits)
+    # Hide numbers on axis
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
     # Set for a box plot (otherwise circles are stretched)
     ax.set_aspect('equal', 'box')
-    # TODO: Hide numbers on axis
     return fig,ax
 
 def plot_disks(disks, ax):
