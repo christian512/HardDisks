@@ -2,20 +2,22 @@ from plotting import *
 from disk_movement import *
 import numpy as np
 import matplotlib.animation as animation
+import sys
 
-
-
-
-
+# SHOULD ANIMATION BE STORED OR DISPLAYED
+STORE_ANIMATION = 1
+# Seed the random generator
+np.random.seed(42)
 # Define constants
-N = 20 # Number of disks
+N = 5 # Number of disks
 # Set radius
 RADIUS = 5
 # Set box limits
 X_LIMITS = [-100, 100]
 Y_LIMITS = [-100, 100]
 # Set maximum speed in one direction
-VELOCITY = 2
+VELOCITY = 5.01
+
 
 # Set maximum time step (for visualizations to be smooth)
 T_STEP = 1
@@ -39,16 +41,18 @@ for i in range(N):
             disks = np.append(disks, [[x, y, vx, vy, RADIUS]], axis=0)
             break
 
-# setup plot
-fig, ax = plot_setup_box(X_LIMITS, Y_LIMITS)
-ax, circles = plot_disks(disks, ax)
+# setup plotting environment
+fig, box_ax = plot_setup_box(X_LIMITS, Y_LIMITS)
+# plot circles
+box_ax, circles = plot_disks(disks, box_ax)
+
 
 # Simulate for a number of steps
 t = 0
 
 
 def update_data(self):
-    global t, circles, disks, fig, ax, T_STEP, X_LIMITS, Y_LIMITS
+    global t, circles, disks, fig, T_STEP, X_LIMITS, Y_LIMITS, dist_ax
     while True:
         # Calculate time to next wall hit
         dt_wall, disk_num = time_to_next_wall_collision(disks, X_LIMITS, Y_LIMITS)
@@ -72,13 +76,20 @@ def update_data(self):
 
         # If time is for plotting -> add a new plot to the animation
         if t % T_STEP < 10**(-5):
+            print(t)
+            # update disk position
             for i in range(len(circles)):
                 circles[i].set_center((disks[i,0],disks[i,1]))
+            # return circles
             return circles
 
 print('Running simulation')
-simulation = animation.FuncAnimation(fig, update_data, interval=1, frames=200)
-plt.show()
+simulation = animation.FuncAnimation(fig, update_data,frames=250)
+
+if STORE_ANIMATION:
+    simulation.save('results/dynamics.gif',writer='imagemagick',fps=40)
+else:
+    plt.show()
 
 
 
