@@ -34,7 +34,7 @@ def plot_setup_distribution(disks):
     velos = np.sqrt(disks[:,2]**2 + disks[:,3]**2)
     # set limits
     ax.set_xlim([0,np.ceil(np.max(velos))])
-    #ax.set_ylim([0,np.sqrt(disks.shape[0])])
+    ax.set_ylim([0,1])
     # return setup plots
     return fig, ax
 
@@ -42,8 +42,9 @@ def plot_distribution(disks, ax, bins=20):
     """ Plots the distribution of velocities of all disks"""
     # get absolute velocities of all disks
     velos = np.sqrt(disks[:,2]**2 + disks[:,3]**2)
+    ax.set_ylim([0, 1])
     # plot histogram of all velocities
-    ax.hist(velos,bins=bins,color='b')
+    ax.hist(velos,bins=bins,color='b',density=True)
     return ax
 
 
