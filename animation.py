@@ -9,7 +9,7 @@ STORE_ANIMATION = 1
 # Seed the random generator
 np.random.seed(42)
 # Define constants
-N = 5 # Number of disks
+N = 5  # Number of disks
 # Set radius
 RADIUS = 5
 # Set box limits
@@ -23,7 +23,7 @@ VELOCITY = 5.01
 T_STEP = 1
 
 # Create new disks
-disks = np.empty((0,5),float) # List of all disks
+disks = np.empty((0, 5), float)  # List of all disks
 print('Placing disks')
 for i in range(N):
     # Initialize random positions and check that they are non overlapping
@@ -32,7 +32,7 @@ for i in range(N):
         x = (np.random.random() - 0.5) * (X_LIMITS[1] - X_LIMITS[0] - 2 * RADIUS)
         y = (np.random.random() - 0.5) * (Y_LIMITS[1] - Y_LIMITS[0] - 2 * RADIUS)
         # Check if this position is not overlapping with other
-        if (np.sqrt((disks[:,0]-x)**2 + (disks[:,1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
+        if (np.sqrt((disks[:, 0]-x)**2 + (disks[:, 1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
             # Initialize random velocities (measured in m/s)
             v = np.random.rand(2) - 0.5
             # Rescale the velocity to the absolute value from the already sampled velocities
@@ -79,18 +79,15 @@ def update_data(self):
             print(t)
             # update disk position
             for i in range(len(circles)):
-                circles[i].set_center((disks[i,0],disks[i,1]))
+                circles[i].set_center((disks[i, 0], disks[i, 1]))
             # return circles
             return circles
 
+
 print('Running simulation')
-simulation = animation.FuncAnimation(fig, update_data,frames=250)
+simulation = animation.FuncAnimation(fig, update_data, frames=250)
 
 if STORE_ANIMATION:
-    simulation.save('results/dynamics.gif',writer='imagemagick',fps=40)
+    simulation.save('results/dynamics.gif', writer='imagemagick', fps=40)
 else:
     plt.show()
-
-
-
-
