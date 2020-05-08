@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def time_to_next_wall_collision(disks, xlim, ylim):
     """ Calculates the time until the next disks hits the next wall """
     min_time = 999999999
@@ -33,7 +34,8 @@ def time_to_next_wall_collision(disks, xlim, ylim):
     # Return minimum time of next wall hit and number of disk to hit wall
     return min_time, disk_num
 
-def update_disk_velocities_wall_collision(disks, disk_num , xlim, ylim):
+
+def update_disk_velocities_wall_collision(disks, disk_num, xlim, ylim):
     """ Updates the velocities for a given disk after a wall collision
         Also checks if the wall is actually hit.
     """
@@ -54,13 +56,15 @@ def update_disk_velocities_wall_collision(disks, disk_num , xlim, ylim):
     print('Warning: NO DISK HAS HIT THE WALL, BUT IT WAS ASSUMED THAT ONE DOES')
     return disks
 
-def time_to_next_collision(disk1,disk2):
+
+def time_to_next_collision(disk1, disk2):
     """ Calculates next collision time between two disks
         For calculation of formulas see handwritten page
     """
     denominator = (disk1[2]-disk2[2])**2+(disk1[3]-disk2[3])**2
     chi = ((disk1[0]-disk2[0])*(disk1[2]-disk2[2])+(disk1[1]-disk2[1])*(disk1[3]-disk2[3]))
-    delta = chi**2 - denominator * ((disk1[0]-disk2[0])**2 + (disk1[1]-disk2[1])**2 - (disk1[-1] + disk2[-1])**2)
+    delta = chi**2 - denominator * ((disk1[0]-disk2[0])**2 +
+                                    (disk1[1]-disk2[1])**2 - (disk1[-1] + disk2[-1])**2)
     if delta <= 0:
         return False
     t1 = (-chi + np.sqrt(delta)) / denominator
@@ -68,6 +72,7 @@ def time_to_next_collision(disk1,disk2):
 
     # Return both solutions of the quadratic equation
     return t1, t2
+
 
 def time_next_disk_disk_collision(disks):
     """ Calculates the time when the next two disks collide"""
@@ -78,16 +83,16 @@ def time_next_disk_disk_collision(disks):
     disk1, disk2 = -1, -1
     # Iterate over all disks
     for i in range(disks.shape[0]):
-        for j in range(i,disks.shape[0]):
+        for j in range(i, disks.shape[0]):
             # Get time to next collision
-            res = time_to_next_collision(disks[i],disks[j])
+            res = time_to_next_collision(disks[i], disks[j])
             # if result was fetched
             if res:
                 # unpack the times and update minimum time
                 t1, t2 = res
                 if t1 < 0 or t2 < 0:
                     continue
-                dt = min(t1,t2)
+                dt = min(t1, t2)
                 if dt < min_time:
                     min_time = dt
                     disk1, disk2 = i, j
@@ -99,8 +104,8 @@ def time_next_disk_disk_collision(disks):
 def update_disk_velocities_collision(disks, disk1, disk2):
     """ Update the disk velocities of two disk that collide """
     # Get velocity vectors
-    v1 = np.array([disks[disk1,2], disks[disk1, 3]])
-    v2 = np.array([disks[disk2,2], disks[disk2, 3]])
+    v1 = np.array([disks[disk1, 2], disks[disk1, 3]])
+    v2 = np.array([disks[disk2, 2], disks[disk2, 3]])
     # distance vector
     d1 = np.array([disks[disk1, 0] - disks[disk2, 0], disks[disk1, 1] - disks[disk2, 1]])
     d2 = np.copy(d1)
@@ -123,21 +128,10 @@ def update_disk_velocities_collision(disks, disk1, disk2):
     return disks
 
 
-
-
-
-
-
-
-
-
-
-
-
 def move_disks(disks, delta_t):
     """ Moves disks by a time step delta_t """
     for i in range(disks.shape[0]):
         # Move disks by their current velocity and delta_t
-        disks[i, 0] += disks[i,2] * delta_t
+        disks[i, 0] += disks[i, 2] * delta_t
         disks[i, 1] += disks[i, 3] * delta_t
     return disks

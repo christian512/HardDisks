@@ -5,7 +5,7 @@ import sys
 
 
 # Define constants
-N_list = [1,2,3,4] # Number of disks
+N_list = [1, 2, 3, 4]  # Number of disks
 # runs per N
 RUNS = 1000
 # Set radius
@@ -27,7 +27,7 @@ for l, N in enumerate(N_list):
 
     for k in range(RUNS):
         # Create new disks
-        disks = np.empty((0,5),float) # List of all disks
+        disks = np.empty((0, 5), float)  # List of all disks
         for i in range(N):
             # Initialize random positions and check that they are non overlapping
             while True:
@@ -35,11 +35,11 @@ for l, N in enumerate(N_list):
                 x = np.random.random() * (X_LIMITS[0] + 2 * RADIUS)
                 y = (np.random.random() - 0.5) * (Y_LIMITS[1] - Y_LIMITS[0] - 2 * RADIUS)
                 # Check if this position is not overlapping with other
-                if (np.sqrt((disks[:,0]-x)**2 + (disks[:,1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
+                if (np.sqrt((disks[:, 0]-x)**2 + (disks[:, 1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
                     # Initialize random velocity direction
                     vx = (np.random.random() - 0.5)
                     vy = (np.random.random() - 0.5)
-                    v = np.array([vx,vy])
+                    v = np.array([vx, vy])
                     # rescale velocity to the required magnitude
                     vx, vy = v * VELOCITY / np.sqrt(np.sum(v**2))
                     # Create a disk row and append to list of all disks
@@ -48,7 +48,7 @@ for l, N in enumerate(N_list):
 
         # Simulate for a number of steps
         t = 0
-        return_t = 0 # return time
+        return_t = 0  # return time
 
         all_disks_returned = False
         still_in_start = True
@@ -66,7 +66,7 @@ for l, N in enumerate(N_list):
 
             # Add time step to global animation time
             t += dt
-            return_t += dt # update return time
+            return_t += dt  # update return time
 
             # Move disks by time step
             disks = move_disks(disks, dt)
@@ -77,38 +77,26 @@ for l, N in enumerate(N_list):
                 disks = update_disk_velocities_collision(disks, disk_coll1, disk_coll2)
 
             # check if all disks returned
-            if (disks[:,0] < 0).all() and still_in_start is False:
+            if (disks[:, 0] < 0).all() and still_in_start is False:
                 all_disks_returned = True
-            if not (disks[:,0] < 0).all() and still_in_start:
+            if not (disks[:, 0] < 0).all() and still_in_start:
                 still_in_start = False
-                return_t = 0 # Reset return time
+                return_t = 0  # Reset return time
 
-        return_times[l,k] = return_t
+        return_times[l, k] = return_t
         if return_t < 0:
             sys.exit('ERROR NEGATIVE RETURN TIME')
 
 
 # Plot return times mean
-plt.title('{0} runs, V = {1:1.2f}, R = {2}'.format(RUNS,VELOCITY, RADIUS))
-plt.errorbar(N_list,np.mean(return_times,axis=1),yerr=np.std(return_times,axis=1),fmt='x')
+plt.title('{0} runs, V = {1:1.2f}, R = {2}'.format(RUNS, VELOCITY, RADIUS))
+plt.errorbar(N_list, np.mean(return_times, axis=1), yerr=np.std(return_times, axis=1), fmt='x')
 plt.ylabel('Return time in seconds')
 plt.xlabel('Number of disks')
-plt.ylim(0, np.max(np.mean(return_times,axis=1))*1.1)
-filename = 'results/returntimes_N{0}_R{1}_V{2}_RUNS{3}'.format(N_list[-1], RADIUS, int(VELOCITY), RUNS)
+plt.ylim(0, np.max(np.mean(return_times, axis=1))*1.1)
+filename = 'results/returntimes_N{0}_R{1}_V{2}_RUNS{3}'.format(
+    N_list[-1], RADIUS, int(VELOCITY), RUNS)
 plt.savefig(filename + '.png')
 
 np.savetxt(filename + '.csv', return_times, delimiter=',')
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
