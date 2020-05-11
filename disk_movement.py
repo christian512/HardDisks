@@ -135,3 +135,11 @@ def move_disks(disks, delta_t):
         disks[i, 0] += disks[i, 2] * delta_t
         disks[i, 1] += disks[i, 3] * delta_t
     return disks
+
+def get_temperature(disks):
+    """ Returns the temperature calculated by the velocity of the disks """
+    # Asśume a mass of 1 and k_B = 1
+    kinetic_energy = np.sum(disks[:,2]**2 + disks[:,3]**2)/2
+    temp = kinetic_energy / disks.shape[0]
+    return temp
+

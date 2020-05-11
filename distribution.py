@@ -86,5 +86,5 @@ def update_data(self):
 
 
 print('Running simulation')
-simulation = animation.FuncAnimation(fig, update_data, interval=200, frames=5)
+simulation = animation.FuncAnimation(fig, update_data, interval=200, frames=60)
 simulation.save('results/distribution.gif', writer='imagemagick')

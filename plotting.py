@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from disk_movement import get_temperature
 import numpy as np
 
 
@@ -48,4 +49,15 @@ def plot_distribution(disks, ax, bins=20):
     ax.set_ylim([0, 1])
     # plot histogram of all velocities
     ax.hist(velos, bins=bins, color='b', density=True)
+    # plot true distribution
+    ax = plot_maxwell(0,np.max(bins), get_temperature(disks), ax)
     return ax
+
+def plot_maxwell(x_min, x_max, T, ax):
+    """ Plots the maxwell distribution."""
+    x = np.linspace(x_min,x_max, 100)
+    y = x / T * np.exp(-(x**2)/(2*T))
+    ax.plot(x,y,c='red')
+    return ax
+
+
