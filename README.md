@@ -25,10 +25,15 @@ If we initialize all disks with a absolute velocity drawn from a uniform velocit
 of velocities will change over time, due to collisions between disks. As the system is closed, the 
 temperature of the system will not change. Temperature can be defined via the kinetic energy and 
 the equipartition theorem (here in 2D):
+
 ![E_{kin} = \sum m_i * v_i^2$$ $$ \frac{E_{kin}}{N} = k_B T](https://render.githubusercontent.com/render/math?math=E_%7Bkin%7D%20%3D%20%5Csum%20m_i%20*%20v_i%5E2%24%24%20%24%24%20%5Cfrac%7BE_%7Bkin%7D%7D%7BN%7D%20%3D%20k_B%20T)
+
 ![\frac{E_{kin}}{N} = k_B T ](https://render.githubusercontent.com/render/math?math=%5Cfrac%7BE_%7Bkin%7D%7D%7BN%7D%20%3D%20k_B%20T%20)
+
 Using `k_B = 1` and assuming all disks have the same mass `m_i = 1`, results in: 
+
 ![T = \frac{\sum v_i^2}{N}](https://render.githubusercontent.com/render/math?math=T%20%3D%20%5Cfrac%7B%5Csum%20v_i%5E2%7D%7BN%7D)
+
 The Maxwell-distribution should model the velocity distribution in equilibrium. Using the same 
 simplifications the Maxwell distribution can easily be plotted. 
 Plotting the time evolution for an initial uniform velocity distribution, we find that it approaches
