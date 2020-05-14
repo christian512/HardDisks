@@ -3,7 +3,6 @@ from disk_movement import *
 import numpy as np
 import sys
 
-
 # Define constants
 N_list = [1, 2, 3, 4]  # Number of disks
 # runs per N
@@ -21,7 +20,6 @@ T_STEP = 1
 # Array for storing return time results
 return_times = np.empty((len(N_list), RUNS), dtype=float)
 
-
 for l, N in enumerate(N_list):
     print('N = {}'.format(N))
 
@@ -35,13 +33,13 @@ for l, N in enumerate(N_list):
                 x = np.random.random() * (X_LIMITS[0] + 2 * RADIUS)
                 y = (np.random.random() - 0.5) * (Y_LIMITS[1] - Y_LIMITS[0] - 2 * RADIUS)
                 # Check if this position is not overlapping with other
-                if (np.sqrt((disks[:, 0]-x)**2 + (disks[:, 1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
+                if (np.sqrt((disks[:, 0] - x) ** 2 + (disks[:, 1] - y) ** 2) > 2 * RADIUS).all() or disks.shape[0] == 0:
                     # Initialize random velocity direction
                     vx = (np.random.random() - 0.5)
                     vy = (np.random.random() - 0.5)
                     v = np.array([vx, vy])
                     # rescale velocity to the required magnitude
-                    vx, vy = v * VELOCITY / np.sqrt(np.sum(v**2))
+                    vx, vy = v * VELOCITY / np.sqrt(np.sum(v ** 2))
                     # Create a disk row and append to list of all disks
                     disks = np.append(disks, [[x, y, vx, vy, RADIUS]], axis=0)
                     break
@@ -87,17 +85,17 @@ for l, N in enumerate(N_list):
         if return_t < 0:
             sys.exit('ERROR NEGATIVE RETURN TIME')
 
-# reste plots
+# reset plots
 plt.clf()
 # Plot return times mean
 plt.title('{0} runs, V = {1:1.2f}, R = {2}'.format(RUNS, VELOCITY, RADIUS))
 plt.errorbar(N_list, np.mean(return_times, axis=1), yerr=np.std(return_times, axis=1), fmt='x')
 plt.ylabel('Return time in seconds')
 plt.xlabel('Number of disks')
-plt.ylim(0, np.max(np.mean(return_times, axis=1))*1.1)
+plt.ylim(0, np.max(np.mean(return_times, axis=1)) * 1.1)
 filename = 'results/returntimes_N{0}_R{1}_V{2}_RUNS{3}'.format(
     N_list[-1], RADIUS, int(VELOCITY), RUNS)
+# Save plot and data
 plt.savefig(filename + '.png')
-
 np.save(filename + '.csv', return_times, delimiter=',')
 plt.show()

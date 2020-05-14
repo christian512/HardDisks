@@ -61,10 +61,10 @@ def time_to_next_collision(disk1, disk2):
     """ Calculates next collision time between two disks
         For calculation of formulas see handwritten page
     """
-    denominator = (disk1[2]-disk2[2])**2+(disk1[3]-disk2[3])**2
-    chi = ((disk1[0]-disk2[0])*(disk1[2]-disk2[2])+(disk1[1]-disk2[1])*(disk1[3]-disk2[3]))
-    delta = chi**2 - denominator * ((disk1[0]-disk2[0])**2 +
-                                    (disk1[1]-disk2[1])**2 - (disk1[-1] + disk2[-1])**2)
+    denominator = (disk1[2] - disk2[2]) ** 2 + (disk1[3] - disk2[3]) ** 2
+    chi = ((disk1[0] - disk2[0]) * (disk1[2] - disk2[2]) + (disk1[1] - disk2[1]) * (disk1[3] - disk2[3]))
+    delta = chi ** 2 - denominator * ((disk1[0] - disk2[0]) ** 2 +
+                                      (disk1[1] - disk2[1]) ** 2 - (disk1[-1] + disk2[-1]) ** 2)
     if delta <= 0:
         return False
     t1 = (-chi + np.sqrt(delta)) / denominator
@@ -109,7 +109,7 @@ def update_disk_velocities_collision(disks, disk1, disk2):
     # distance vector
     d1 = np.array([disks[disk1, 0] - disks[disk2, 0], disks[disk1, 1] - disks[disk2, 1]])
     d2 = np.copy(d1)
-    d = d1[0]**2 + d1[1]**2
+    d = d1[0] ** 2 + d1[1] ** 2
     # get parallel vectors
     v1_para = np.dot(v1, d1) * d1 / d
     v2_para = np.dot(v2, d2) * d2 / d
@@ -136,10 +136,10 @@ def move_disks(disks, delta_t):
         disks[i, 1] += disks[i, 3] * delta_t
     return disks
 
+
 def get_temperature(disks):
     """ Returns the temperature calculated by the velocity of the disks """
     # Asśume a mass of 1 and k_B = 1
-    kinetic_energy = np.sum(disks[:,2]**2 + disks[:,3]**2)/2
+    kinetic_energy = np.sum(disks[:, 2] ** 2 + disks[:, 3] ** 2) / 2
     temp = kinetic_energy / disks.shape[0]
     return temp
-

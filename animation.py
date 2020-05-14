@@ -17,7 +17,6 @@ Y_LIMITS = [-100, 100]
 # Set maximum speed in one direction
 VELOCITY = 5.01
 
-
 # Set maximum time step (for visualizations to be smooth)
 T_STEP = 1
 
@@ -31,7 +30,7 @@ for i in range(N):
         x = (np.random.random() - 0.5) * (X_LIMITS[1] - X_LIMITS[0] - 2 * RADIUS)
         y = (np.random.random() - 0.5) * (Y_LIMITS[1] - Y_LIMITS[0] - 2 * RADIUS)
         # Check if this position is not overlapping with other
-        if (np.sqrt((disks[:, 0]-x)**2 + (disks[:, 1]-y)**2) > 2 * RADIUS).all() or disks.shape[0] == 0:
+        if (np.sqrt((disks[:, 0] - x) ** 2 + (disks[:, 1] - y) ** 2) > 2 * RADIUS).all() or disks.shape[0] == 0:
             # Initialize random velocities (measured in m/s)
             v = np.random.rand(2) - 0.5
             # Rescale the velocity to the absolute value from the already sampled velocities
@@ -45,12 +44,12 @@ fig, box_ax = plot_setup_box(X_LIMITS, Y_LIMITS)
 # plot circles
 box_ax, circles = plot_disks(disks, box_ax)
 
-
 # Simulate for a number of steps
 t = 0
 
 
 def update_data(self):
+    """ Function that updates disks position until next animation frame"""
     global t, circles, disks, fig, T_STEP, X_LIMITS, Y_LIMITS, dist_ax
     while True:
         # Calculate time to next wall hit
@@ -60,7 +59,7 @@ def update_data(self):
         dt = min(dt_wall, T_STEP, dt_disk)
 
         # Get back to animation timing schedule if t is off
-        if t % T_STEP > 10**(-5):
+        if t % T_STEP > 10 ** (-5):
             dt = min(dt, T_STEP - (t % T_STEP))
         # Add time step to global animation time
         t += dt
@@ -74,7 +73,7 @@ def update_data(self):
             disks = update_disk_velocities_collision(disks, disk_coll1, disk_coll2)
 
         # If time is for plotting -> add a new plot to the animation
-        if t % T_STEP < 10**(-5):
+        if t % T_STEP < 10 ** (-5):
             print(t)
             # update disk position
             for i in range(len(circles)):

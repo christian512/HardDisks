@@ -34,7 +34,7 @@ def plot_setup_distribution(disks):
     # create plots
     fig, ax = plt.subplots()
     # get all velocities from disks array
-    velos = np.sqrt(disks[:, 2]**2 + disks[:, 3]**2)
+    velos = np.sqrt(disks[:, 2] ** 2 + disks[:, 3] ** 2)
     # set limits
     ax.set_xlim([0, np.ceil(np.max(velos))])
     ax.set_ylim([0, 1])
@@ -45,19 +45,18 @@ def plot_setup_distribution(disks):
 def plot_distribution(disks, ax, bins=20):
     """ Plots the distribution of velocities of all disks"""
     # get absolute velocities of all disks
-    velos = np.sqrt(disks[:, 2]**2 + disks[:, 3]**2)
+    velos = np.sqrt(disks[:, 2] ** 2 + disks[:, 3] ** 2)
     ax.set_ylim([0, 1])
     # plot histogram of all velocities
     ax.hist(velos, bins=bins, color='b', density=True)
     # plot true distribution
-    ax = plot_maxwell(0,np.max(bins), get_temperature(disks), ax)
+    ax = plot_maxwell(0, np.max(bins), get_temperature(disks), ax)
     return ax
+
 
 def plot_maxwell(x_min, x_max, T, ax):
     """ Plots the maxwell distribution."""
-    x = np.linspace(x_min,x_max, 100)
-    y = x / T * np.exp(-(x**2)/(2*T))
-    ax.plot(x,y,c='red')
+    x = np.linspace(x_min, x_max, 100)
+    y = x / T * np.exp(-(x ** 2) / (2 * T))
+    ax.plot(x, y, c='red')
     return ax
-
-
