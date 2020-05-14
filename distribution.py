@@ -2,8 +2,6 @@ from plotting import *
 from disk_movement import *
 import numpy as np
 import matplotlib.animation as animation
-import sys
-
 
 np.random.seed(42)
 # Define constants

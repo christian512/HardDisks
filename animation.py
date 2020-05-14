@@ -2,7 +2,6 @@ from plotting import *
 from disk_movement import *
 import numpy as np
 import matplotlib.animation as animation
-import sys
 
 # SHOULD ANIMATION BE STORED OR DISPLAYED
 STORE_ANIMATION = 1
