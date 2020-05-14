@@ -19,6 +19,18 @@ number of disks, the live animation is not running smoothly.
 * `distribution.py` - Animates the velocity distribution for all disks as histogram
 
 ## Return times
+Here we let all disks start in the left half of the box. Then a timer is started as soon one of the 
+disks leaves that half of the box. The timer stops, when all disks came back to the initial half of the box.
+The time taken between the initial leave and return is called *return time*.
+We initialize each of the disks with the same absolute velocity. As you can see from the formulas below (in the Velocity Distribution section)
+the temperature is then just given by the square of the velocity. 
+Plotting now the return times for different numbers of disks and temperatures (velocities), we obtain:
+
+![Return times](results/returntimes.png)
+
+As we can see the return times increase for higher number of disks. However the setting with a single disks has a higher return time, since there are only disk-wall
+collision occurring. Thus it takes longer for all (here 1) disk to come back.
+Increasing the temperature yields smaller return times as the disks move faster in a high temperature system.
 
 ## Velocity distribution
 If we initialize all disks with a absolute velocity drawn from a uniform velocity, the distribution 
