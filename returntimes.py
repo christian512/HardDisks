@@ -7,14 +7,14 @@ import sys
 # Define constants
 N_list = [1, 2, 3, 4]  # Number of disks
 # runs per N
-RUNS = 1000
+RUNS = 500
 # Set radius
 RADIUS = 5
 # Set box limits
 X_LIMITS = [-100, 100]
 Y_LIMITS = [-100, 100]
 # Set maximum speed in one direction
-VELOCITY = 1
+VELOCITY = 4
 # Set maximum time step for side checks to be smooth
 T_STEP = 1
 
@@ -77,7 +77,7 @@ for l, N in enumerate(N_list):
                 disks = update_disk_velocities_collision(disks, disk_coll1, disk_coll2)
 
             # check if all disks returned
-            if (disks[:, 0] < 0).all() and still_in_start is False:
+            if (disks[:, 0] < -RADIUS).all() and still_in_start is False:
                 all_disks_returned = True
             if not (disks[:, 0] < 0).all() and still_in_start:
                 still_in_start = False
@@ -87,7 +87,8 @@ for l, N in enumerate(N_list):
         if return_t < 0:
             sys.exit('ERROR NEGATIVE RETURN TIME')
 
-
+# reste plots
+plt.clf()
 # Plot return times mean
 plt.title('{0} runs, V = {1:1.2f}, R = {2}'.format(RUNS, VELOCITY, RADIUS))
 plt.errorbar(N_list, np.mean(return_times, axis=1), yerr=np.std(return_times, axis=1), fmt='x')
@@ -98,5 +99,5 @@ filename = 'results/returntimes_N{0}_R{1}_V{2}_RUNS{3}'.format(
     N_list[-1], RADIUS, int(VELOCITY), RUNS)
 plt.savefig(filename + '.png')
 
-np.savetxt(filename + '.csv', return_times, delimiter=',')
+np.save(filename + '.csv', return_times, delimiter=',')
 plt.show()
