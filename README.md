@@ -10,8 +10,11 @@ should follow real physics of collisions, as you can see in the following animat
 ## Project structure
 All relevant files for the simulation are located within the root folder of the repository.
 To run the live animations you need to have `TKinter` installed for python on your system.
-This can be done by running ``` sudo apt-get install python3-tk``` on Ubuntu.  All python 
-packages needed are listed in the `requirements.txt`.
+This can be done by running ``` sudo apt-get install python3-tk``` on Ubuntu. As a writer
+for the animations we use `imagemagick`, which should also be installed on your system. 
+
+
+All python packages needed are listed in the `requirements.txt`. 
 
 ### Simulation files
 * `animation.py` - animates the movement of the disks either live or exported as GIF. For high
